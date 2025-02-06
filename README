@@ -1,0 +1,3 @@
+# LEDPanel
+This is firmware for an LED panel controller and associated remote.
+It is designed to run on Xiao ESP32-C3s.
