@@ -205,6 +205,7 @@ struct UI {
         new Slider(47, 54, whenBackWarmthChange),
       }
   {
+    Serial.begin(9600);
     Serial.println("UI::UI 0"); // debugging The Hard Way ™
     display.begin();
     Serial.println("UI::UI 1"); // debugging The Hard Way ™

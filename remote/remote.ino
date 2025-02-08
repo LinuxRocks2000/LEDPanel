@@ -27,9 +27,6 @@ struct LedPanel {
 LedPanel frontPanel, backPanel;
 
 
-U8G2_SSD1309_128X64_NONAME2_F_HW_I2C display(U8G2_R0);
-
-
 struct ControlFrame { // this is the C++ equivalent of
 /*
   enum ControlFrame {
@@ -109,35 +106,26 @@ Encoder encoder(ENCODER_A, ENCODER_B);
 
 
 void setup() {
-  Serial.println("setup 0"); // debugging The Hard Way ™
   // put your setup code here, to run once:
-  Serial.begin(9600);
-  Serial.println("setup 1"); // debugging The Hard Way ™
+  Serial.println("setup 0"); // debugging The Hard Way ™
   //setup_espnow(); // set up the wifi adapter (this has to be called every time it wakes from deep sleep)
   // TODO: cycle down cpu frequency
   ui.render();
-  Serial.println("setup 2"); // debugging The Hard Way ™
+  Serial.println("setup 1"); // debugging The Hard Way ™
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  Serial.println("loop 1");
   auto delta = encoder.poll();
-  Serial.println("loop 2");
   button1.poll();
-  Serial.println("loop 3");
   button2.poll();
-  Serial.println("loop 4");
   if (delta) {
     ui.encoderTurn(delta);
-    Serial.println("loop 5-1");
   }
   if (button1.wasReleasedSLC()) {
     ui.button1();
-    Serial.println("loop 5-2");
   }
   if (button2.wasReleasedSLC()) {
     ui.button2();
-    Serial.println("loop 5-3");
   }
 }
