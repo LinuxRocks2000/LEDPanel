@@ -24,7 +24,7 @@ struct LedPanel {
   uint8_t warmth;
 };
 
-LedPanel frontPanel, backPanel;
+//LedPanel frontPanel, backPanel;
 
 
 struct ControlFrame { // this is the C++ equivalent of
@@ -90,14 +90,14 @@ struct {
 } state;
 
 
-UI ui {
+/*UI ui {
   [](bool v){}, // front toggle
   [](bool v){}, // back toggle
   [](int v){}, // back brightness
   [](int v){}, // back warmth
   [](int v){}, // front brightness
   [](int v){}, // front warmth
-};
+};*/
 
 
 PullupButton button1(BUTTON_UPPER);
@@ -110,13 +110,13 @@ void setup() {
   Serial.println("setup 0"); // debugging The Hard Way ™
   //setup_espnow(); // set up the wifi adapter (this has to be called every time it wakes from deep sleep)
   // TODO: cycle down cpu frequency
-  ui.render();
+  //ui.render();
   Serial.println("setup 1"); // debugging The Hard Way ™
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  auto delta = encoder.poll();
+  /*auto delta = encoder.poll();
   button1.poll();
   button2.poll();
   if (delta) {
@@ -127,5 +127,5 @@ void loop() {
   }
   if (button2.wasReleasedSLC()) {
     ui.button2();
-  }
+  }*/
 }
