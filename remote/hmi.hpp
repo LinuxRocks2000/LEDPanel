@@ -17,6 +17,7 @@ struct Encoder {
   int poll() {
     bool a = !digitalRead(pinA);
     bool b = !digitalRead(pinB);
+    State oldState = state;
     if (state == State::LOCK) {
       if (!a && b) {
         state = State::LEFT_START;
@@ -35,6 +36,10 @@ struct Encoder {
         return -1;
       }
     }
+    Serial.print("encoder detents: a ");
+    Serial.print(a);
+    Serial.print(", b ");
+    Serial.println(b);
     return 0;
   }
 };

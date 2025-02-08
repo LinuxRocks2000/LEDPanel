@@ -108,6 +108,7 @@ void setup() {
     [](int v){}, // back warmth
     [](int v){}, // front brightness
     [](int v){}, // front warmth
+    [](int v){}, // timer
   };
   delay(1000);
   ui.render();

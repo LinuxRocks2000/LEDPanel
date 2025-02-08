@@ -68,7 +68,7 @@ struct Timer : UIElement {
   Timer(int _x, int _y, UiCallback<int> _setTimer) : x { _x }, y { _y }, setTimer { _setTimer } {}
 
   bool selectable() {
-    return false;
+    return true;
   }
 
   void render(Display* display) {
@@ -78,6 +78,16 @@ struct Timer : UIElement {
     display -> drawLine(x + 7, y + 7, x + 7, y + 7 - 3);
     display -> drawStr(x + 18, y + 5, "set a");
     display -> drawStr(x + 18, y + 12, "timer");
+  }
+
+  Box box() {
+    return Box {
+      x, y, 38, 14
+    };
+  }
+
+  bool interact() {
+    return true;
   }
 };
 
@@ -194,7 +204,7 @@ struct Slider : UIElement {
 
 
 struct UI {
-  static const int UI_ELEMENT_COUNT = 12;
+  static const int UI_ELEMENT_COUNT = 13;
   int uiSelected = 0;
   int selectableCount = 0;
 
@@ -209,7 +219,8 @@ struct UI {
       UiCallback<int> whenBackBrightnessChange,
       UiCallback<int> whenBackWarmthChange,
       UiCallback<int> whenFrontBrightnessChange,
-      UiCallback<int> whenFrontWarmthChange) : display(U8G2_R0), elements {
+      UiCallback<int> whenFrontWarmthChange,
+      UiCallback<int> whenTimerSet) : display(U8G2_R0), elements {
         new TextBanner(5, 5, "front"),
         new TextBanner(48, 5, "back"),
         new EnableDisableToggleButton(5, 12, whenFrontToggle),
@@ -222,6 +233,7 @@ struct UI {
         new Slider(4, 54, whenFrontWarmthChange),
         new Slider(47, 36, whenBackBrightnessChange),
         new Slider(47, 54, whenBackWarmthChange),
+        new Timer(82, 6, whenTimerSet)
       }
   {
     display.begin();
@@ -247,6 +259,14 @@ struct UI {
     }
   }
 
+  const char* getTooltip() { // tooltips render into a tiny 42x40 space
+    // because this is a 4x5 font, that's 8 lines of 5 characters each
+    if (interactLock != -1) {
+      return elements[interactLock] -> captureTooltip();
+    }
+    return "turn knob to";
+  }
+
   void render() {
     display.clearBuffer();
     for (int i = 0; i < UI_ELEMENT_COUNT; i ++) {
@@ -258,6 +278,7 @@ struct UI {
         display.drawFrame(b.x, b.y, b.w, b.h);
       }
     }
+    const char* tooltip = getTooltip();
     display.sendBuffer();
   }
 
