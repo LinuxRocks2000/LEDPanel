@@ -4,8 +4,8 @@ struct Encoder {
   int pinB;
 
   Encoder(int a, int b) : pinA { a }, pinB { b } {
-    pinMode(a, INPUT);
-    pinMode(b, INPUT);
+    pinMode(a, INPUT_PULLUP);
+    pinMode(b, INPUT_PULLUP);
   }
 
   enum State {

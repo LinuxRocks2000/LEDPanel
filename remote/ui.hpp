@@ -260,7 +260,7 @@ struct UI {
   }
 
   const char* getTooltip() { // tooltips render into a tiny 42x40 space
-    // because this is a 4x5 font, that's 8 lines of 5 characters each
+    // because this is a 4x5 font, that's 8 lines of 10 characters each
     if (interactLock != -1) {
       return elements[interactLock] -> captureTooltip();
     }
