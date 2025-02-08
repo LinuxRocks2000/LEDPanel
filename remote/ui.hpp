@@ -88,7 +88,7 @@ struct EnableDisableToggleButton : UIElement {
 
   Box box() {
     return Box {
-      x, y, 26, 10
+      x, y, 28, 10
     };
   }
 
@@ -105,16 +105,16 @@ struct EnableDisableToggleButton : UIElement {
   void render(Display* display) {
     if (state) {
       display -> setDrawColor(0); // clear the area behind
-      display -> drawBox(x, y, 26, 10);
+      display -> drawBox(x, y, 28, 10);
       display -> setDrawColor(1);
-      display -> drawFrame(x, y, 26, 10);
+      display -> drawFrame(x, y, 28, 10);
     }
     else {
       display -> setDrawColor(1);
-      display -> drawBox(x, y, 26, 10);
+      display -> drawBox(x, y, 28, 10);
     }
     display -> setDrawColor(2);
-    display -> drawStr(x + 4, y + 3, state ? "enabled" : "disabled");
+    display -> drawStr(x + 1, y + 8, state ? "enabled" : "disabled");
   }
 };
 
@@ -191,14 +191,14 @@ struct UI {
       UiCallback<int> whenBackWarmthChange,
       UiCallback<int> whenFrontBrightnessChange,
       UiCallback<int> whenFrontWarmthChange) : display(U8G2_R0), elements {
-        new TextBanner(8, 5, "front panel"),
-        new TextBanner(51, 5, "back panel"),
+        new TextBanner(0, 5, "front panel"),
+        new TextBanner(49, 5, "back panel"),
         new EnableDisableToggleButton(9, 14, whenFrontToggle),
         new EnableDisableToggleButton(51, 14, whenBackToggle),
-        new TextBanner(10, 30, "brightness"),
-        new TextBanner(53, 30, "brightness"),
-        new TextBanner(13, 47, "warmth"),
-        new TextBanner(56, 47, "warmth"),
+        new TextBanner(0, 30, "brightness"),
+        new TextBanner(48, 30, "brightness"),
+        new TextBanner(0, 47, "warmth"),
+        new TextBanner(48, 47, "warmth"),
         new Slider(4, 36, whenFrontBrightnessChange),
         new Slider(4, 54, whenFrontWarmthChange),
         new Slider(47, 36, whenBackBrightnessChange),
@@ -243,6 +243,7 @@ struct UI {
   }
 
   void button1() {
+    Serial.println("button 1");
     if (interactLock != -1) {
       if (elements[interactLock] -> capturedButton1()) {
         interactLock = -1;
@@ -257,6 +258,7 @@ struct UI {
   }
 
   void button2() { // when not captured, button 2 does nothing but force screen refresh
+    Serial.println("button 2");
     if (interactLock != -1) {
       if (elements[interactLock] -> capturedButton2()) {
         interactLock = -1;
@@ -266,6 +268,8 @@ struct UI {
   }
 
   void encoderTurn(int delta) {
+    Serial.print("encoder turned ");
+    Serial.println(delta);
     if (interactLock != -1) {
       if (elements[interactLock] -> capturedEncoder(delta)) {
         interactLock = -1;

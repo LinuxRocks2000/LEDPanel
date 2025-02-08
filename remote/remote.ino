@@ -98,7 +98,7 @@ Encoder encoder(ENCODER_A, ENCODER_B);
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.println("setup 0"); // debugging The Hard Way ™
+  Serial.begin(9600);
   //setup_espnow(); // set up the wifi adapter (this has to be called every time it wakes from deep sleep)
   // TODO: cycle down cpu frequency
   UI ui {
