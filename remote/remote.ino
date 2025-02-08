@@ -109,22 +109,24 @@ void setup() {
     [](int v){}, // front brightness
     [](int v){}, // front warmth
   };
+  delay(1000);
   ui.render();
-  Serial.println("setup 1"); // debugging The Hard Way ™
+  while (1) {
+    auto delta = encoder.poll();
+    button1.poll();
+    button2.poll();
+    if (delta) {
+      ui.encoderTurn(delta);
+    }
+    if (button1.wasReleasedSLC()) {
+      ui.button1();
+    }
+    if (button2.wasReleasedSLC()) {
+      ui.button2();
+    }
+  }
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  /*auto delta = encoder.poll();
-  button1.poll();
-  button2.poll();
-  if (delta) {
-    ui.encoderTurn(delta);
-  }
-  if (button1.wasReleasedSLC()) {
-    ui.button1();
-  }
-  if (button2.wasReleasedSLC()) {
-    ui.button2();
-  }*/
+  // the program never reaches loop
 }

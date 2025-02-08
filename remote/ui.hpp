@@ -205,20 +205,14 @@ struct UI {
         new Slider(47, 54, whenBackWarmthChange),
       }
   {
-    Serial.begin(9600);
-    Serial.println("UI::UI 0"); // debugging The Hard Way ™
     display.begin();
-    Serial.println("UI::UI 1"); // debugging The Hard Way ™
     display.setFont(u8g2_font_micro_mr);
-    Serial.println("UI::UI 2"); // debugging The Hard Way ™
     checkSelected();
-    Serial.println("UI::UI 3"); // debugging The Hard Way ™
     for (int i = 0; i < UI_ELEMENT_COUNT; i ++) {
       if (elements[i] -> selectable()) {
         selectableCount ++;
       }
     }
-    Serial.println("UI::UI 4"); // debugging The Hard Way ™
   }
 
   void checkSelected() {
@@ -235,18 +229,17 @@ struct UI {
   }
 
   void render() {
-    display.firstPage();
-    while (display.nextPage()) {
-      for (int i = 0; i < UI_ELEMENT_COUNT; i ++) {
-        elements[i] -> render(&display);
-        if (i == uiSelected) {
-          Box b = elements[i] -> box();
-          b.extend(3);
-          display.setDrawColor(1);
-          display.drawFrame(b.x, b.y, b.w, b.h);
-        }
+    display.clearBuffer();
+    for (int i = 0; i < UI_ELEMENT_COUNT; i ++) {
+      elements[i] -> render(&display);
+      if (i == uiSelected) {
+        Box b = elements[i] -> box();
+        b.extend(3);
+        display.setDrawColor(1);
+        display.drawFrame(b.x, b.y, b.w, b.h);
       }
     }
+    display.sendBuffer();
   }
 
   void button1() {
