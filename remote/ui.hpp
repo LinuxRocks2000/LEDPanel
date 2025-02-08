@@ -59,6 +59,29 @@ struct UIElement {
   }
 };
 
+
+struct Timer : UIElement {
+  int x;
+  int y;
+  UiCallback<int> setTimer;
+
+  Timer(int _x, int _y, UiCallback<int> _setTimer) : x { _x }, y { _y }, setTimer { _setTimer } {}
+
+  bool selectable() {
+    return false;
+  }
+
+  void render(Display* display) {
+    display -> setDrawColor(1);
+    display -> drawCircle(x + 7, y + 7, 7, U8G2_DRAW_ALL);
+    display -> drawLine(x + 7, y + 7, x + 14, y + 7);
+    display -> drawLine(x + 7, y + 7, x + 7, y + 7 - 3);
+    display -> drawStr(x + 18, y + 5, "set a");
+    display -> drawStr(x + 18, y + 12, "timer");
+  }
+};
+
+
 struct TextBanner : UIElement {
   int x;
   int y;
@@ -169,13 +192,6 @@ struct Slider : UIElement {
   }
 };
 
-/*
-struct Timer : UIElement {
-  bool selectable() {
-    return true;
-  }
-};
-*/
 
 struct UI {
   static const int UI_ELEMENT_COUNT = 12;
