@@ -26,10 +26,6 @@ struct Box {
 
 
 struct UIElement {
-  virtual bool end() {
-    return false;
-  }
-
   virtual bool selectable() {
     return false;
   }
@@ -114,7 +110,7 @@ struct EnableDisableToggleButton : UIElement {
       display -> drawBox(x, y, 31, 10);
       display -> setDrawColor(0);
     }
-    display -> drawStr(x + 2, y + 8, state ? "enabled" : "disabled");
+    display -> drawStr(x + 2, y + 8, state ? "disable" : "enable");
   }
 };
 
@@ -173,6 +169,13 @@ struct Slider : UIElement {
   }
 };
 
+/*
+struct Timer : UIElement {
+  bool selectable() {
+    return true;
+  }
+};
+*/
 
 struct UI {
   static const int UI_ELEMENT_COUNT = 12;
@@ -193,8 +196,8 @@ struct UI {
       UiCallback<int> whenFrontWarmthChange) : display(U8G2_R0), elements {
         new TextBanner(5, 5, "front"),
         new TextBanner(48, 5, "back"),
-        new EnableDisableToggleButton(9, 14, whenFrontToggle),
-        new EnableDisableToggleButton(51, 14, whenBackToggle),
+        new EnableDisableToggleButton(5, 12, whenFrontToggle),
+        new EnableDisableToggleButton(48, 12, whenBackToggle),
         new TextBanner(5, 32, "bright"),
         new TextBanner(48, 32, "bright"),
         new TextBanner(5, 50, "warmth"),

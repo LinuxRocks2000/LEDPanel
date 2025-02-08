@@ -54,6 +54,12 @@ struct PullupButton { // track button presses. HIGH = released, LOW = pressed.
     if (lastState == LOW && v == HIGH) { // if we just went from being pressed to being released
       wasReleased = true;
     }
+    if (lastState != v) {
+      Serial.print("pin ");
+      Serial.print(pin);
+      Serial.print(" state changed to ");
+      Serial.println(v);
+    }
     lastState = v;
   }
 
