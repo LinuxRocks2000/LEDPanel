@@ -24,7 +24,7 @@ struct LedPanel {
   uint8_t warmth;
 };
 
-//LedPanel frontPanel, backPanel;
+LedPanel frontPanel, backPanel;
 
 
 struct ControlFrame { // this is the C++ equivalent of
@@ -90,15 +90,6 @@ struct {
 } state;
 
 
-/*UI ui {
-  [](bool v){}, // front toggle
-  [](bool v){}, // back toggle
-  [](int v){}, // back brightness
-  [](int v){}, // back warmth
-  [](int v){}, // front brightness
-  [](int v){}, // front warmth
-};*/
-
 
 PullupButton button1(BUTTON_UPPER);
 PullupButton button2(BUTTON_LOWER);
@@ -110,7 +101,15 @@ void setup() {
   Serial.println("setup 0"); // debugging The Hard Way ™
   //setup_espnow(); // set up the wifi adapter (this has to be called every time it wakes from deep sleep)
   // TODO: cycle down cpu frequency
-  //ui.render();
+  UI ui {
+    [](bool v){}, // front toggle
+    [](bool v){}, // back toggle
+    [](int v){}, // back brightness
+    [](int v){}, // back warmth
+    [](int v){}, // front brightness
+    [](int v){}, // front warmth
+  };
+  ui.render();
   Serial.println("setup 1"); // debugging The Hard Way ™
 }
 
