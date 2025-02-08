@@ -88,7 +88,7 @@ struct EnableDisableToggleButton : UIElement {
 
   Box box() {
     return Box {
-      x, y, 28, 10
+      x, y, 31, 10
     };
   }
 
@@ -105,16 +105,16 @@ struct EnableDisableToggleButton : UIElement {
   void render(Display* display) {
     if (state) {
       display -> setDrawColor(0); // clear the area behind
-      display -> drawBox(x, y, 28, 10);
+      display -> drawBox(x, y, 31, 10);
       display -> setDrawColor(1);
-      display -> drawFrame(x, y, 28, 10);
+      display -> drawFrame(x, y, 31, 10);
     }
     else {
       display -> setDrawColor(1);
-      display -> drawBox(x, y, 28, 10);
+      display -> drawBox(x, y, 31, 10);
+      display -> setDrawColor(0);
     }
-    display -> setDrawColor(2);
-    display -> drawStr(x + 1, y + 8, state ? "enabled" : "disabled");
+    display -> drawStr(x + 2, y + 8, state ? "enabled" : "disabled");
   }
 };
 
@@ -191,14 +191,14 @@ struct UI {
       UiCallback<int> whenBackWarmthChange,
       UiCallback<int> whenFrontBrightnessChange,
       UiCallback<int> whenFrontWarmthChange) : display(U8G2_R0), elements {
-        new TextBanner(0, 5, "front panel"),
-        new TextBanner(49, 5, "back panel"),
+        new TextBanner(5, 5, "front"),
+        new TextBanner(48, 5, "back"),
         new EnableDisableToggleButton(9, 14, whenFrontToggle),
         new EnableDisableToggleButton(51, 14, whenBackToggle),
-        new TextBanner(0, 30, "brightness"),
-        new TextBanner(48, 30, "brightness"),
-        new TextBanner(0, 47, "warmth"),
-        new TextBanner(48, 47, "warmth"),
+        new TextBanner(5, 32, "bright"),
+        new TextBanner(48, 32, "bright"),
+        new TextBanner(5, 50, "warmth"),
+        new TextBanner(48, 50, "warmth"),
         new Slider(4, 36, whenFrontBrightnessChange),
         new Slider(4, 54, whenFrontWarmthChange),
         new Slider(47, 36, whenBackBrightnessChange),
