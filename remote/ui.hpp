@@ -3,7 +3,7 @@
 const int ENCODER_DRAG = 2; // ticks of the encoder to move to the next element
 
 template <typename T> using UiCallback = void (*)(T);
-using Display = U8G2_SSD1309_128X64_NONAME2_F_HW_I2C;
+using Display = U8G2_SSD1309_128X64_NONAME0_F_HW_I2C;
 
 
 struct Box {

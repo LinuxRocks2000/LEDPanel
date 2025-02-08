@@ -111,6 +111,7 @@ void setup() {
   };
   delay(1000);
   ui.render();
+  long long lastUpdate = millis();
   while (1) {
     auto delta = encoder.poll();
     button1.poll();
@@ -123,6 +124,11 @@ void setup() {
     }
     if (button2.wasReleasedSLC()) {
       ui.button2();
+    }
+    long long now = millis();
+    if (now - lastUpdate > 500) {
+      lastUpdate = now;
+      ui.render();
     }
   }
 }
