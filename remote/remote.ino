@@ -15,7 +15,7 @@ const int TIMEOUT = 30 * 1000; // in ms. if 30 seconds have passed without updat
 const int BUTTON_UPPER = D9;
 const int BUTTON_LOWER = D10;
 const int ENCODER_A = D8;
-const int ENCODER_B = D7;
+const int ENCODER_B = D6;
 
 // END CONFIGURABLES
 
@@ -101,7 +101,7 @@ void setup() {
   Serial.begin(9600);
   //setup_espnow(); // set up the wifi adapter (this has to be called every time it wakes from deep sleep)
   // TODO: cycle down cpu frequency
-  UI ui {
+  /*UI ui {
     [](bool v){}, // front toggle
     [](bool v){}, // back toggle
     [](int v){}, // back brightness
@@ -109,27 +109,28 @@ void setup() {
     [](int v){}, // front brightness
     [](int v){}, // front warmth
     [](int v){}, // timer
-  };
+  };*/
   delay(1000);
-  ui.render();
+  //ui.render();
   long long lastUpdate = millis();
   while (1) {
     auto delta = encoder.poll();
     button1.poll();
     button2.poll();
     if (delta) {
-      ui.encoderTurn(delta);
+      //ui.encoderTurn(delta);
     }
     if (button1.wasReleasedSLC()) {
-      ui.button1();
+      //ui.button1();
     }
     if (button2.wasReleasedSLC()) {
-      ui.button2();
+      //ui.button2();
     }
+    delay(1000);
     long long now = millis();
     if (now - lastUpdate > 500) {
       lastUpdate = now;
-      ui.render();
+      //ui.render();
     }
   }
 }

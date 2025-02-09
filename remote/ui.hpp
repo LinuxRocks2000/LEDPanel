@@ -261,10 +261,11 @@ struct UI {
 
   const char* getTooltip() { // tooltips render into a tiny 42x40 space
     // because this is a 4x5 font, that's 8 lines of 10 characters each
+    // return value must be a nul-terminated string with \n line separators
     if (interactLock != -1) {
       return elements[interactLock] -> captureTooltip();
     }
-    return "turn knob to";
+    return "turn knob\nto choose\n\npress up\nbutton to\n select\n";
   }
 
   void render() {
@@ -278,7 +279,26 @@ struct UI {
         display.drawFrame(b.x, b.y, b.w, b.h);
       }
     }
+    char linebuf[11];
+    for (int i = 0; i < 11; i ++) {
+      linebuf[i] = 0;
+    }
     const char* tooltip = getTooltip();
+    int line = 0;
+    for (int i = 0; tooltip[i] != 0; i ++) {
+      if (tooltip[i] == 10) {
+        line ++;
+        display.drawStr(86, 24 + line * 5, linebuf);
+        for (int i = 0; i < 11; i ++) {
+          linebuf[i] = 0;
+        }
+        tooltip += i;
+        i = -1;
+      }
+      else {
+        linebuf[i] = tooltip[i];
+      }
+    }
     display.sendBuffer();
   }
 
